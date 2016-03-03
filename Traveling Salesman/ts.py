@@ -1,7 +1,5 @@
 #!usr/bin/python3
 
-import numpy as np
-import operator
 import ts_utils as tu
 import ts_methods as tm
 

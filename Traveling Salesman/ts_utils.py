@@ -10,6 +10,7 @@ def read_matrix():
             dtype=np.dtype(int)
         )
     )
+    m += np.transpose(m)
     return m
 
 
@@ -39,10 +40,23 @@ def print_tour(m, tour):
         else:
             print('{0} --[{1}]-->'.format(n[1], m[n]), end=' ')
 
-            if not reverse:
-                print('{0} --[{1}]--> {2}'.format(n[1], m[0, n[1]], 0))
-            else:
-                print('{0} --[{1}]--> {2}'.format(n[0], m[0, n[0]], 0))
+    if not reverse:
+        print('{0} --[{1}]--> {2}'.format(n[1], m[0, n[1]], 0), end=' ')
+    else:
+        print('{0} --[{1}]--> {2}'.format(n[0], m[0, n[0]], 0), end=' ')
+
+    print()
+
+
+def print_tour_sorted(m, tour):
+    pre = None
+    for (city, mean) in tour:
+        if pre is not None:
+            print('--[', m[city, pre], ']--> ', city, sep='', end=' ')
+        else:
+            print(city, end=' ')
+    
+    print('--[', m[tour[0][0], pre], ']--> ', tour[0][0], sep='')
 
 
 def tour_cost(tour):

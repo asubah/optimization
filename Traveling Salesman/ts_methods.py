@@ -1,7 +1,7 @@
 #!usr/bin/python3
 
 import operator
-import ts_utils.py as tu
+import ts_utils as tu
 
 
 def ts_mean(m):
@@ -19,19 +19,19 @@ def ts_mean(m):
         if pre is not None:
             cost = m[city, pre]
             tour[(pre, city)] = cost
-            # print('--[', cost, ']--> ', city, sep='', end=' ')
+            print('--[', cost, ']--> ', city, sep='', end=' ')
             best_cost += cost
-            # else:
-            # print(city, end=' ')
+        else:
+            print(city, end=' ')
 
         pre = city
 
     cost = m[means_sorted_tour[0][0], pre]
     tour[pre, means_sorted_tour[0][0]] = cost
-    # print('--[', cost, ']--> ', means_sorted_tour[0][0], sep='')
+    print('--[', cost, ']--> ', means_sorted_tour[0][0], sep='')
     best_cost += cost
 
-    tu.print_tour(tour)
+    # tu.print_tour_sorted(m, means_sorted_tour)
     print('Total Cost:', best_cost)
 
     return tour, best_cost
@@ -81,3 +81,7 @@ def ts_0011(m, tour, best_cost):
             break
 
     return best_tour, best_cost
+
+
+def ts_0101(m, tour, best):
+    None
