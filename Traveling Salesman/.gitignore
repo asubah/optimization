@@ -55,4 +55,4 @@ docs/_build/
 *.DS_Store
 
 # IDE
-/.idea
+.idea
