@@ -1,5 +1,17 @@
 #!usr/bin/python3
 
+import numpy as np
+
+
+def read_matrix():
+    m = np.matrix(
+        np.loadtxt(
+            'm.txt',
+            dtype=np.dtype(int)
+        )
+    )
+    return m
+
 
 def print_tour(m, tour):
     n = [(x, y) for x, y in tour.keys() if x == 0 or y == 0][0]
@@ -31,3 +43,7 @@ def print_tour(m, tour):
                 print('{0} --[{1}]--> {2}'.format(n[1], m[0, n[1]], 0))
             else:
                 print('{0} --[{1}]--> {2}'.format(n[0], m[0, n[0]], 0))
+
+
+def tour_cost(tour):
+    return np.sum([value for (key, value) in tour.items()])
