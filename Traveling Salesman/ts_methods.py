@@ -2,6 +2,7 @@
 
 import operator
 import ts_utils as tu
+from copy import deepcopy
 
 
 def ts_mean(m):
@@ -38,7 +39,7 @@ def ts_mean(m):
 
 
 def ts_0011(m, tour, best_cost):
-    best_tour = tour
+    best_tour = None
 
     while True:
         sorted_tour = sorted(tour.items(), key=operator.itemgetter(1), reverse=True)
@@ -61,27 +62,30 @@ def ts_0011(m, tour, best_cost):
         # print(first_max[0], second_max[0])
         # print(new_edge1, new_edge2)
 
+        tour.pop(first_max[0])
+        tour.pop(second_max[0])
         tour[new_edge1] = m[new_edge1]
         tour[new_edge2] = m[new_edge2]
 
-        tour.pop(first_max[0])
-        tour.pop(second_max[0])
-
         new_cost = tu.tour_cost(tour)
-
         tu.print_tour(m, tour)
 
         print('Total Cost: ', new_cost)
 
         if new_cost < best_cost:
             best_cost = new_cost
-            best_tour = tour
+            best_tour = deepcopy(tour)
         else:
             print('Best Cost Reached:', best_cost)
+
             break
 
     return best_tour, best_cost
 
 
 def ts_0101(m, tour, best):
-    None
+    sorted_tour = sorted(tour.items(), key=operator.itemgetter(1), reverse=True)
+    max_edge = sorted_tour[0]
+
+
+
