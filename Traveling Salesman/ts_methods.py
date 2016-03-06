@@ -8,7 +8,7 @@ from copy import deepcopy
 def ts_mean(m):
     means = {}
 
-    for i in range(0, m[0].size - 1):
+    for i in range(0, m[0].size):
         means[i] = m[0:, i].mean()
 
     means_sorted_tour = sorted(means.items(), key=operator.itemgetter(1))
