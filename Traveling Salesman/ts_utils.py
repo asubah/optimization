@@ -98,7 +98,7 @@ def sort_tour_dict(m, tour):
 
 
 def sort_tour_list(m, tour):
-    n = [(x, y) for ((x, y), z) in tour if x == 0 or y == 0][0]
+    n = tour[0][0]  # [(x, y) for ((x, y), z) in tour if x == 0 or y == 0][0]
     sorted_tour = [(n, m[n])]
     reverse = False
     for i in range(0, m[0].size - 2):
@@ -124,9 +124,9 @@ def sort_tour_list(m, tour):
             sorted_tour.append(((n[1], n[0]), m[n]))
 
     if not reverse:
-        sorted_tour.append(((n[1], 0), m[n[1], 0]))
+        sorted_tour.append(((n[1], tour[0][0][0]), m[n[1], tour[0][0][0]]))
     else:
-        sorted_tour.append(((n[0], 0), m[n[0], 0]))
+        sorted_tour.append(((n[0], tour[0][0][0]), m[n[0], tour[0][0][0]]))
 
     return sorted_tour
 
@@ -169,4 +169,14 @@ def get_edge(tour, node_x=None, node_y=None):
             return [((x, y), z) for ((x, y), z) in tour if y == node_y][0]
         else:
             return None
+
+
+def are_neighbours(edge0, edge1):
+    if edge0[0] == edge1[0] \
+            or edge0[0] == edge1[1] \
+            or edge0[1] == edge1[0] \
+            or edge0[1] == edge1[1]:
+        return True
+    else:
+        return False
 
