@@ -10,7 +10,7 @@ def read_matrix():
             dtype=np.dtype(int)
         )
     )
-    m += np.transpose(m)
+    # m += np.transpose(m)
     return m
 
 

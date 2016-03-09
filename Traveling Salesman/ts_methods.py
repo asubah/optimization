@@ -80,6 +80,9 @@ def ts_0011(m, tour, best_cost):
 
 
 def ts_0101(m, tour, best):
+    best_cost = best
+    best_tour = tour
+
     while True:
         max_edge = sorted(tour, key=itemgetter(1), reverse=True)[0]
 
@@ -106,12 +109,10 @@ def ts_0101(m, tour, best):
 
             tour.pop(tour.index(max_edge))
             added = ((selected_node, new_node), m[(selected_node, new_node)])
-            print(added)
             tour.append(added)
             removed_edge = tu.get_edge(tour, node_x=new_node)
             tour.pop(tour.index(removed_edge))
             added = ((node1, removed_edge[0][1]), m[(node1, removed_edge[0][1])])
-            print(added)
             tour.append(added)
         else:
             selected_node = node1
@@ -119,15 +120,12 @@ def ts_0101(m, tour, best):
 
             tour.pop(tour.index(max_edge))
             added = ((selected_node, new_node), m[(selected_node, new_node)])
-            print(added)
             tour.append(added)
             removed_edge = tu.get_edge(tour, node_y=new_node)
             tour.pop(tour.index(removed_edge))
             added = ((node0, removed_edge[0][0]), m[(node0, removed_edge[0][0])])
-            print(added)
             tour.append(added)
 
-        print(tour)
         tour = tu.sort_tour_list(m, tour)
 
         new_cost = tu.tour_cost_sorted(tour)
@@ -142,5 +140,6 @@ def ts_0101(m, tour, best):
             print('Best Cost Reached:', best_cost)
             break
 
+    return best_tour, best_cost
 
 
