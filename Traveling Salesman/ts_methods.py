@@ -3,6 +3,7 @@
 from copy import deepcopy
 from operator import itemgetter
 from sys import maxsize
+import numpy as np
 
 import ts_utils as tu
 
@@ -39,7 +40,7 @@ def ts_mean(m):
 
 
 def ts_0011(m, tour, best_cost):
-    best_tour = None
+    best_tour = deepcopy(tour)
 
     while True:
         sorted_tour = sorted(tour, key=itemgetter(1), reverse=True)
@@ -81,7 +82,7 @@ def ts_0011(m, tour, best_cost):
 
 def ts_0101(m, tour, best):
     best_cost = best
-    best_tour = tour
+    best_tour = deepcopy(tour)
 
     while True:
         max_edge = sorted(tour, key=itemgetter(1), reverse=True)[0]
@@ -143,3 +144,90 @@ def ts_0101(m, tour, best):
     return best_tour, best_cost
 
 
+def ts_1100(m, tour, best):
+    best_cost = best
+    best_tour = deepcopy(tour)
+
+    while True:
+        m_copy = deepcopy(m)
+
+        for edge in tour:
+            m_copy[edge[0]] = maxsize
+            m_copy[edge[0][1], edge[0][0]] = maxsize
+            m_copy[edge[0][0], edge[0][0]] = maxsize
+
+        min_cost = m_copy.min()
+        min_index = np.where(m_copy == min_cost)[0]
+        min_edge = ((min_index[0], min_index[1]), min_cost)
+
+        neighbours1 = tu.get_neighbour_nodes(tour, min_index[0])
+        neighbours2 = tu.get_neighbour_nodes(tour, min_index[1])
+        # print(neighbours1)
+        # print(neighbours2)
+        # print(neighbours1[0][0], neighbours2[0][0])
+        # print(neighbours1[1][1], neighbours2[1][1])
+
+        cost1 = m[neighbours1[0][0], neighbours2[0][0]]
+        cost2 = m[neighbours1[1][1], neighbours2[1][1]]
+
+        min_edge2 = None
+        if cost1 < cost2:
+            min_edge2 = ((neighbours1[0][0], neighbours2[0][0]), cost1)
+        else:
+            min_edge2 = ((neighbours1[1][1], neighbours2[1][1]), cost2)
+
+        # print(min_edge)
+        # print(min_edge2)
+
+        tour.append(min_edge)
+        tour.append(min_edge2)
+
+        to_be_removed = ((min_edge[0][0], min_edge2[0][0]), m[(min_edge[0][0], min_edge2[0][0])])
+        if to_be_removed in tour:
+            tour.pop(tour.index(to_be_removed))
+        else:
+            to_be_removed = ((min_edge2[0][0], min_edge[0][0]), m[(min_edge[0][0], min_edge2[0][0])])
+            if to_be_removed in tour:
+                tour.pop(tour.index(to_be_removed))
+            else:
+                to_be_removed = ((min_edge[0][0], min_edge2[0][1]), m[(min_edge[0][0], min_edge2[0][1])])
+                if to_be_removed in tour:
+                    tour.pop(tour.index(to_be_removed))
+                else:
+                    to_be_removed = ((min_edge2[0][1], min_edge[0][0]), m[(min_edge[0][0], min_edge2[0][1])])
+                    if to_be_removed in tour:
+                        tour.pop(tour.index(to_be_removed))
+
+        # print(to_be_removed)
+        to_be_removed = ((min_edge[0][1], min_edge2[0][1]), m[(min_edge[0][1], min_edge2[0][1])])
+        if to_be_removed in tour:
+            tour.pop(tour.index(to_be_removed))
+        else:
+            to_be_removed = ((min_edge2[0][1], min_edge[0][1]), m[(min_edge[0][1], min_edge2[0][1])])
+            if to_be_removed in tour:
+                tour.pop(tour.index(to_be_removed))
+            else:
+                to_be_removed = ((min_edge[0][1], min_edge2[0][0]), m[(min_edge[0][1], min_edge2[0][0])])
+                if to_be_removed in tour:
+                    tour.pop(tour.index(to_be_removed))
+                else:
+                    to_be_removed = ((min_edge2[0][0], min_edge[0][1]), m[(min_edge[0][1], min_edge2[0][0])])
+                    if to_be_removed in tour:
+                        tour.pop(tour.index(to_be_removed))
+        # print(to_be_removed)
+
+        tour = tu.sort_tour_list(m, tour)
+
+        new_cost = tu.tour_cost_sorted(tour)
+        tu.print_tour_sorted(tour)
+
+        print('Total Cost: ', new_cost)
+
+        if new_cost < best_cost:
+            best_cost = new_cost
+            best_tour = deepcopy(tour)
+        else:
+            print('Best Cost Reached:', best_cost)
+            break
+
+    return best_tour, best_cost

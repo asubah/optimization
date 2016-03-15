@@ -146,20 +146,20 @@ def get_neighbour_edges(tour, edge):
 
 
 def get_neighbour_nodes(tour, node):
-    n = [(x, y) for x, y in tour.keys() if x == node or y == node]
-    x = y = None
+    n = [(x, y) for (x, y), z in tour if x == node or y == node]
+    # x = y = None
 
     if n[0][0] == node:
-        x = n[0][1]
-    else:
-        x = n[0][0]
+        n = [n[1], n[0]]
+    # else:
+    #     x = n[0][0]
+    #
+    # if n[1][0] == node:
+    #     y = n[1][1]
+    # else:
+    #     y = n[1][0]
 
-    if n[1][0] == node:
-        y = n[1][1]
-    else:
-        y = n[1][0]
-
-    return x, y
+    return n
 
 
 def get_edge(tour, node_x=None, node_y=None):
