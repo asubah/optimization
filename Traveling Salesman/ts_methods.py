@@ -231,3 +231,64 @@ def ts_1100(m, tour, best):
             break
 
     return best_tour, best_cost
+
+
+def ts_1010(m, tour, best):
+    best_cost = best
+    best_tour = deepcopy(tour)
+
+    while True:
+        m_copy = deepcopy(m)
+
+        for edge in tour:
+            m_copy[edge[0]] = maxsize
+            m_copy[edge[0][1], edge[0][0]] = maxsize
+            m_copy[edge[0][0], edge[0][0]] = maxsize
+
+        min_cost = m_copy.min()
+        min_index = np.where(m_copy == min_cost)[0]
+        min_edge1 = ((min_index[0], min_index[1]), min_cost)
+
+        neighbours = tu.get_neighbour_nodes(tour, min_index[0])
+        neighbours += tu.get_neighbour_nodes(tour, min_index[1])
+
+        # print(min_edge1)
+        # print(neighbours)
+
+        max_edge1 = (None, -1)
+        for edge in neighbours:
+            if m[edge] > max_edge1[1]:
+                max_edge1 = (edge, m[edge])
+
+        max_edge2 = neighbours[(neighbours.index(max_edge1[0]) + 2) % 4]
+        min_edge2 = max_edge1[0][0], max_edge2[0]
+
+        max_edge2 = (max_edge2, m[max_edge2])
+        min_edge2 = (min_edge2, m[min_edge2])
+
+        # print()
+        # print('add', min_edge1)
+        # print('remove', max_edge1)
+        # print('add', min_edge2)
+        # print('remove', max_edge2)
+
+        tour.append(min_edge1)
+        tour.pop(tour.index(max_edge1))
+        tour.append(min_edge2)
+        tour.pop(tour.index(max_edge2))
+
+        tour = tu.sort_tour_list(m, tour)
+
+        new_cost = tu.tour_cost_sorted(tour)
+        tu.print_tour_sorted(tour)
+
+        print('Total Cost: ', new_cost)
+
+        if new_cost < best_cost:
+            best_cost = new_cost
+            best_tour = deepcopy(tour)
+        else:
+            print('Best Cost Reached:', best_cost)
+            break
+
+    return best_tour, best_cost
