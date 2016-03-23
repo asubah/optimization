@@ -39,6 +39,41 @@ def ts_mean(m):
     return tour, best_cost
 
 
+def ts_nearest_neighbour(m):
+    best_cost = maxsize
+    best_tour = None
+
+    for i in range(0, m.shape[0]):
+        visited = [i]
+        mini_i = i
+        for x in range(0, m.shape[0] - 1):
+            row = deepcopy(m[mini_i])
+
+            for j in visited:
+                row[0, j] = maxsize
+
+            mini = row.min()
+            mini_i = row.argmin()
+
+            # print(mini, mini_i)
+            visited.append(mini_i)
+
+        tour = tu.array_to_tour(m, visited)
+
+        new_cost = tu.tour_cost_sorted(tour)
+        tu.print_tour_sorted(tour)
+
+        print('Total Cost: ', new_cost)
+
+        if new_cost < best_cost:
+            best_cost = new_cost
+            best_tour = deepcopy(tour)
+
+    print('Best Cost Reached:', best_cost)
+
+    return best_tour, best_cost
+
+
 def ts_0011(m, tour, best_cost):
     best_tour = deepcopy(tour)
 

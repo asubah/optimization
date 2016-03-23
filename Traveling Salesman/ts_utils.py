@@ -180,3 +180,14 @@ def are_neighbours(edge0, edge1):
     else:
         return False
 
+
+def array_to_tour(m, arr):
+    tour = []
+    for i in range(len(arr) - 1):
+        edge = (arr[i], arr[i+1])
+        tour.append((edge, m[edge]))
+
+    edge = (arr[-1], arr[0])
+    tour.append((edge, m[edge]))
+
+    return tour
