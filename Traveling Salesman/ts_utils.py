@@ -1,17 +1,28 @@
 #!usr/bin/python3
 
 import numpy as np
+from math import sqrt
 
 
 def read_matrix():
     m = np.matrix(
         np.loadtxt(
-            'm.txt',
-            dtype=np.dtype(int)
+            'm.txt'
         )
     )
     # m += np.transpose(m)
     return m
+
+
+def produce_matrix(path):
+    data = np.genfromtxt(path, skip_header=6, skip_footer=1, dtype=np.int)
+    m = np.zeros(shape=(len(data), len(data)))
+
+    for i in range(0, m.shape[0]):
+        for j in range(0, m.shape[0]):
+            m[i, j] = e_distance(data[i][1], data[i][2], data[j][1], data[j][2])
+
+    np.savetxt('m.txt', m)
 
 
 def print_tour(m, tour):
@@ -191,3 +202,7 @@ def array_to_tour(m, arr):
     tour.append((edge, m[edge]))
 
     return tour
+
+
+def e_distance(x, y, a, b):
+    return sqrt(((x - a) ** 2) + ((y - b) ** 2))

@@ -8,6 +8,7 @@ import numpy as np
 import ts_methods as tm
 import ts_utils as tu
 
+tu.produce_matrix('benchmarks/kroA200.txt')
 m = tu.read_matrix()
 
 print("========", "NEAREST NEIGHBOUR", "========")

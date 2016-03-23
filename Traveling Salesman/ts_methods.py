@@ -61,7 +61,7 @@ def ts_nearest_neighbour(m):
         tour = tu.array_to_tour(m, visited)
 
         new_cost = tu.tour_cost_sorted(tour)
-        tu.print_tour_sorted(tour)
+        # tu.print_tour_sorted(tour)
 
         print('Total Cost: ', new_cost)
 
@@ -100,7 +100,7 @@ def ts_0011(m, tour, best_cost):
         tour = tu.sort_tour_list(m, tour)
 
         new_cost = tu.tour_cost_sorted(tour)
-        tu.print_tour_sorted(tour)
+        # tu.print_tour_sorted(tour)
 
         print('Total Cost: ', new_cost)
 
@@ -165,7 +165,7 @@ def ts_0101(m, tour, best):
         tour = tu.sort_tour_list(m, tour)
 
         new_cost = tu.tour_cost_sorted(tour)
-        tu.print_tour_sorted(tour)
+        # tu.print_tour_sorted(tour)
 
         print('Total Cost: ', new_cost)
 
@@ -254,7 +254,7 @@ def ts_1100(m, tour, best):
         tour = tu.sort_tour_list(m, tour)
 
         new_cost = tu.tour_cost_sorted(tour)
-        tu.print_tour_sorted(tour)
+        # tu.print_tour_sorted(tour)
 
         print('Total Cost: ', new_cost)
 
@@ -315,7 +315,7 @@ def ts_1010(m, tour, best):
         tour = tu.sort_tour_list(m, tour)
 
         new_cost = tu.tour_cost_sorted(tour)
-        tu.print_tour_sorted(tour)
+        # tu.print_tour_sorted(tour)
 
         print('Total Cost: ', new_cost)
 
