@@ -15,7 +15,7 @@ def read_matrix():
 
 
 def produce_matrix(path):
-    data = np.genfromtxt(path, skip_header=6, skip_footer=1, dtype=np.int)
+    data = np.genfromtxt(path, skip_header=6, skip_footer=1)  # , dtype=np.int)
     m = np.zeros(shape=(len(data), len(data)))
 
     for i in range(0, m.shape[0]):

@@ -290,13 +290,16 @@ def ts_1010(m, tour, best):
         # print(min_edge1)
         # print(neighbours)
 
-        max_edge1 = (None, -1)
+        max_edge1 = ((-1, -1), -1)
         for edge in neighbours:
-            if m[edge] > max_edge1[1]:
+            if m[edge] > max_edge1[1] and not tu.are_neighbours(edge, max_edge1[0]):
                 max_edge1 = (edge, m[edge])
 
         max_edge2 = neighbours[(neighbours.index(max_edge1[0]) + 2) % 4]
-        min_edge2 = max_edge1[0][0], max_edge2[0]
+        if neighbours.index(max_edge1[0]) != 3:
+            min_edge2 = max_edge1[0][0], max_edge2[0]
+        else:
+            min_edge2 = max_edge1[0][1], max_edge2[1]
 
         max_edge2 = (max_edge2, m[max_edge2])
         min_edge2 = (min_edge2, m[min_edge2])
