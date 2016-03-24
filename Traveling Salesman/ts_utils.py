@@ -205,4 +205,4 @@ def array_to_tour(m, arr):
 
 
 def e_distance(x, y, a, b):
-    return sqrt(((x - a) ** 2) + ((y - b) ** 2))
+    return round(sqrt(((x - a) ** 2) + ((y - b) ** 2)))
